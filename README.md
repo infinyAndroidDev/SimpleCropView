@@ -68,7 +68,7 @@ Add the `com.mayank.simplecropview.CropImageView` to your layout XML file.
 
 ```xml       
 
-<com.isseiaoki.simplecropview.CropImageView
+<com.mayank.simplecropview.CropImageView
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cropImageView"
     android:layout_weight="1"
@@ -366,7 +366,7 @@ setInterpolator(new AccelerateDecelerateInterpolator());
 ```
 
 ## Picasso and Glide Compatibility
-`com.isseiaoki.simplecropview.CropImageView` is a kind of `ImageView`.
+`com.mayank.simplecropview.CropImageView` is a kind of `ImageView`.
 You can use it with Picasso or Glide as follows:
 
 ```java
@@ -395,7 +395,7 @@ setDebug(true);
 XML sample here.
 
 ```xml
-<com.isseiaoki.simplecropview.CropImageView
+<com.mayank.simplecropview.CropImageView
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cropImageView"
     android:layout_weight="1"
