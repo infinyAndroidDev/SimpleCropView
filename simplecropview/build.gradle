@@ -27,7 +27,7 @@ if (!file.exists()) return
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-group = 'com.isseiaoki'
+group = 'com.mayank'
 version = '1.1.8'
 def siteUrl = 'https://github.com/mayank1513/SimpleCropView'
 def gitUrl = 'https://github.com/mayank1513/SimpleCropView.git'
@@ -42,12 +42,12 @@ bintray {
   pkg {
     repo = 'maven'
     name = 'SimpleCropView'
-    desc = 'A simple image cropping library for Android.'
+    desc = 'A simple lightweight image cropping library for Android. Adds less than 50kb to your apk'
     websiteUrl = siteUrl
     issueTrackerUrl = 'https://github.com/mayank1513/SimpleCropView/issues'
     vcsUrl = gitUrl
     licenses = ['MIT']
-    labels = ['android']
+    labels = ['android', 'image-crop', 'android-library']
     publicDownloadNumbers = true
   }
 }
@@ -67,14 +67,14 @@ install {
         }
         developers {
           developer {
-            id 'isseiaoki'
-            name 'Issei Aoki'
-            email 'i.greenwood.dev@gmail.com'
+            id 'mayank1513'
+            name 'Mayank Kumar Chaudhari'
+            email 'mayank.srmu@gmail.com'
           }
         }
         scm {
-          connection 'https://github.com/IsseiAoki/SimpleCropView.git'
-          developerConnection 'https://github.com/IsseiAoki/SimpleCropView.git'
+          connection 'https://github.com/mayank1513/SimpleCropView.git'
+          developerConnection 'https://github.com/mayank1513/SimpleCropView.git'
           url siteUrl
         }
       }

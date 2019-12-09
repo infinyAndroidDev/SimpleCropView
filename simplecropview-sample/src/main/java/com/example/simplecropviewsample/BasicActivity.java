@@ -2,12 +2,11 @@ package com.example.simplecropviewsample;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
@@ -16,16 +15,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.webkit.PermissionRequest;
 
 import com.isseiaoki.simplecropview.CropImageView;
 
 import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
-import com.isseiaoki.simplecropview.util.Logger;
 import com.isseiaoki.simplecropview.util.Utils;
 
 import java.io.File;
@@ -36,7 +32,7 @@ public class BasicActivity extends Activity {
   private static final String TAG = BasicActivity.class.getSimpleName();
 
   private static final int REQUEST_PICK_IMAGE = 10011;
-  private static final int REQUEST_SAF_PICK_IMAGE = 10012;
+  private static final int REQUEST_SAVE_PICK_IMAGE = 10012;
   private static final String PROGRESS_DIALOG = "ProgressDialog";
   private static final String KEY_FRAME_RECT = "FrameRect";
   private static final String KEY_SOURCE_URI = "SourceUri";
@@ -50,9 +46,8 @@ public class BasicActivity extends Activity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.activity_basic);
-    mCropView = (CropImageView) findViewById(R.id.cropImageView);
+    mCropView = findViewById(R.id.cropImageView);
     if (savedInstanceState != null) {
       // restore data
       mFrameRect = savedInstanceState.getParcelable(KEY_FRAME_RECT);
@@ -148,17 +143,17 @@ public class BasicActivity extends Activity {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
       startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT).setType("image/*"),
               REQUEST_PICK_IMAGE);
-    } else {
+    } else if(checkPermissions(REQUEST_PICK_IMAGE)){
       Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
       intent.addCategory(Intent.CATEGORY_OPENABLE);
       intent.setType("image/*");
-      startActivityForResult(intent, REQUEST_SAF_PICK_IMAGE);
+      startActivityForResult(intent, REQUEST_SAVE_PICK_IMAGE);
     }
   }
 
   public void cropImage() {
-    showProgress();
-    mCropView.crop(mSourceUri).execute(mCropCallback);
+    if(checkPermissions(REQUEST_PICK_IMAGE))
+      mCropView.crop(mSourceUri).execute(mCropCallback);
   }
 
   public void showProgress() {
@@ -251,7 +246,7 @@ public class BasicActivity extends Activity {
                   .useThumbnail(true)
                   .execute(mLoadCallback);
           break;
-        case REQUEST_SAF_PICK_IMAGE:
+        case REQUEST_SAVE_PICK_IMAGE:
           mSourceUri = Utils.ensureUriPermission(BasicActivity.this, result);
           mCropView.load(mSourceUri)
                   .initialFrameRect(mFrameRect)
@@ -265,6 +260,10 @@ public class BasicActivity extends Activity {
   @Override public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                                    int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+      if(requestCode == REQUEST_PICK_IMAGE) pickImage();
+      else if(requestCode==REQUEST_SAVE_PICK_IMAGE) cropImage();
+    }
 //    BasicFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
   }
   // Callbacks ///////////////////////////////////////////////////////////////////////////////////
@@ -298,4 +297,13 @@ public class BasicActivity extends Activity {
       dismissProgress();
     }
   };
+
+  public boolean checkPermissions(int reqCode) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+            (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+      requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, reqCode);
+      return false;
+    } else return true;
+  }
 }

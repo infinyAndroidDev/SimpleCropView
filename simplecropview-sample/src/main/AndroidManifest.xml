@@ -13,6 +13,7 @@
       android:theme="@style/AppTheme.Light.NoActionBar">
     <activity
         android:name=".BasicActivity"
+        android:icon="@mipmap/ic_launcher"
         android:configChanges="orientation|screenSize"
         android:label="@string/app_name">
       <intent-filter>
@@ -20,7 +21,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".ResultActivity">
+    <activity android:name=".ResultActivity" android:label="Simple Crop: Result">
     </activity>
   </application>
 

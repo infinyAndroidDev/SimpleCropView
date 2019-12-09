@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.ImageView;
+import android.widget.Toolbar;
 
 import com.isseiaoki.simplecropview.util.Utils;
 
@@ -31,11 +33,11 @@ public class ResultActivity extends Activity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+      getActionBar().setHomeAsUpIndicator(R.drawable.ic_done_black_24dp);
+    }
     setContentView(R.layout.activity_result);
-
-    // apply custom font
-
-    mImageView = (ImageView) findViewById(R.id.result_image);
+    mImageView = findViewById(R.id.result_image);
     mExecutor = Executors.newSingleThreadExecutor();
 
     final Uri uri = getIntent().getData();
