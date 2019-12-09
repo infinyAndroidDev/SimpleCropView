@@ -28,7 +28,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.mayank'
-version = '1.1.8'
+version = '1.0.0'
 def siteUrl = 'https://github.com/mayank1513/SimpleCropView'
 def gitUrl = 'https://github.com/mayank1513/SimpleCropView.git'
 Properties properties = new Properties()
@@ -40,8 +40,8 @@ bintray {
 
   configurations = ['archives'] //When uploading configuration files
   pkg {
-    repo = 'maven'
-    name = 'SimpleCropView'
+    repo = 'SimpleCropView'
+    name = 'com.mayank.SimpleCropView'
     desc = 'A simple lightweight image cropping library for Android. Adds less than 50kb to your apk'
     websiteUrl = siteUrl
     issueTrackerUrl = 'https://github.com/mayank1513/SimpleCropView/issues'

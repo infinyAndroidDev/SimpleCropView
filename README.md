@@ -1,11 +1,7 @@
 ![](https://raw.github.com/wiki/IsseiAoki/SimpleCropView/images/device-art/cover-art.png)
 
 # SimpleCropView
-[![build status](https://travis-ci.org/IsseiAoki/SimpleCropView.svg?branch=master)](https://travis-ci.org/IsseiAoki/SimpleCropView.svg?branch=master)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SimpleCropView-green.svg?style=flat)](https://android-arsenal.com/details/1/2366)
-[![Android Gems](http://www.android-gems.com/badge/IsseiAoki/SimpleCropView.svg?branch=master)](http://www.android-gems.com/lib/IsseiAoki/SimpleCropView)
-
-The SimpleCropView is an image cropping library for Android.<br>
+The SimpleCropView is a simple light-weight image cropping library for Android that adds just less than 50kb to your apk.<br>
 It simplifies your code for cropping image and provides an easily customizable UI.<br><br>
 Supported on API Level 14 and above.
 
@@ -51,7 +47,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.isseiaoki:simplecropview:1.1.8'
+    implementation 'com.mayank:simplecropview:1.0.0'
 }
 ```
 
@@ -66,7 +62,7 @@ Add permission in `AndroidManifest.xml` file.
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 ```
 
-Add the `com.isseiaoki.simplecropview.CropImageView` to your layout XML file.
+Add the `com.mayank.simplecropview.CropImageView` to your layout XML file.
 
 >**NOTE:** The image is scaled to fit the size of the view by maintaining the aspect ratio. `WRAP_CONTENT` will be ignored.
 
@@ -107,12 +103,6 @@ mCropView = (CropImageView) findViewById(R.id.cropImageView);
 mCropView.load(sourceUri).execute(mLoadCallback);
 ```
 
-with RxJava,
-
-```
-mCropView.load(sourceUri).executeAsCompletable();
-```
-
 Crop image and save cropped bitmap in saveUri.
 
 ```java
@@ -126,32 +116,6 @@ mCropView.crop(sourceUri)
   @Override public void onError(Throwable e) {
   }
 });
-```
-
-with RxJava,
-
-```
-mCropView.crop(sourceUri)
-    .executeAsSingle()
-    .flatMap(new Function<Bitmap, SingleSource<Uri>>() {
-      @Override public SingleSource<Uri> apply(@io.reactivex.annotations.NonNull Bitmap bitmap)
-              throws Exception {
-        return mCropView.save(bitmap)
-            .executeAsSingle(saveUri);
-      }
-    })
-    .subscribeOn(Schedulers.newThread())
-    .observeOn(AndroidSchedulers.mainThread())
-    .subscribe(new Consumer<Uri>() {
-      @Override public void accept(@io.reactivex.annotations.NonNull Uri uri) throws Exception {
-        // on success
-      }
-    }, new Consumer<Throwable>() {
-      @Override public void accept(@io.reactivex.annotations.NonNull Throwable throwable)
-              throws Exception {
-        // on error
-      }
-    });
 ```
 
 ### Image Rotation
@@ -172,10 +136,6 @@ cropImageView.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D); // rotate co
 ## Load Image
 
 * `load(sourceUri).execute(mLoadCallback);`
-
-with RxJava,
-
-* `load(sourceUri).executeAsCompletable();`
 
 These method load Bitmap in efficient size from sourceUri. 
 You don't have to care for filePath and image size.
@@ -203,32 +163,6 @@ mCropView.crop(sourceUri)
   @Override public void onError(Throwable e) {
   }
 });
-```
-
-with RxJava,
-
-```
-mCropView.crop(sourceUri)
-    .executeAsSingle()
-    .flatMap(new Function<Bitmap, SingleSource<Uri>>() {
-      @Override public SingleSource<Uri> apply(@io.reactivex.annotations.NonNull Bitmap bitmap)
-              throws Exception {
-        return mCropView.save(bitmap)
-                .executeAsSingle(saveUri);
-      }
-    })
-    .subscribeOn(Schedulers.newThread())
-    .observeOn(AndroidSchedulers.mainThread())
-    .subscribe(new Consumer<Uri>() {
-      @Override public void accept(@io.reactivex.annotations.NonNull Uri uri) throws Exception {
-        // on success
-      }
-    }, new Consumer<Throwable>() {
-      @Override public void accept(@io.reactivex.annotations.NonNull Throwable throwable)
-              throws Exception {
-        // on error
-      }
-    });
 ```
 
 These cropping method use full size bitmap taken from `sourceUri` for cropping. 
@@ -514,24 +448,23 @@ XML sample here.
 | scv_animation_duration | setAnimationDuration(int durationMillis) | Set animation duration. |
 | scv_handle_shadow_enabled | setHandleShadowEnabled(boolean handleShadowEnabled) | Set whether to show handle shadows. |
 
-## Developed By
-Issei Aoki - <i.greenwood.dev@gmail.com>
+## Updated By
+Mayank Kumar Chaudhari - <https://mayank1513.github.io>
  
 ## Users
-* [Snipping Tool - Screen Capture](https://play.google.com/store/apps/details?id=com.anhlt.sniptool)
 
 If you are using my library, please let me know your app name : )
 
-## For Xamarin
-[https://bitbucket.org/markjackmilian/xam.droid.simplecropview](https://bitbucket.org/markjackmilian/xam.droid.simplecropview)
+## For Issei Aoki
+[https://github.com/igreenwood/SimpleCropView](https://github.com/igreenwood/SimpleCropView)
 
-Thanks a million to Marco!!!
+Thanks a million to Issei Aoki!!!
 
 ## License
 ```
 The MIT License (MIT)
 
-Copyright (c) 2015 Issei Aoki
+Copyright (c) 2019 Mayank Kumar Chaudhari
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

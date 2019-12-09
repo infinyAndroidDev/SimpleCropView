@@ -29,3 +29,6 @@ ext {
   rxJavaVersion = '2.1.10'
   rxAndroidVersion = '2.0.2'
 }
+subprojects {
+  tasks.withType(Javadoc).all { enabled = false }
+}
