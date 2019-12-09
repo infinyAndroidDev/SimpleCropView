@@ -39,18 +39,9 @@ import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.isseiaoki.simplecropview.util.Logger;
 import com.isseiaoki.simplecropview.util.Utils;
-import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
-import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.Single;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -1423,15 +1414,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
     loadAsync(sourceUri, false, null, callback);
   }
 
-  /**
-   * Load image from Uri.
-   *
-   * @param sourceUri Image Uri
-   * @param callback Callback
-   *
-   * @see #load(Uri)
-   * @see #loadAsCompletable(Uri, boolean, RectF)
-   */
   public void loadAsync(final Uri sourceUri, final boolean useThumbnail,
       final RectF initialFrameRect, final LoadCallback callback) {
 
@@ -1461,60 +1443,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
         } finally {
           mIsLoading.set(false);
         }
-      }
-    });
-  }
-
-  /**
-   * Load image from Uri with RxJava2
-   *
-   * @param sourceUri Image Uri
-   *
-   * @see #load(Uri)
-   */
-  public Completable loadAsCompletable(final Uri sourceUri) {
-    return loadAsCompletable(sourceUri, false, null);
-  }
-
-  /**
-   * Load image from Uri with RxJava2
-   *
-   * @param sourceUri Image Uri
-   *
-   * @see #load(Uri)
-   *
-   * @return Completable of loading image
-   */
-  public Completable loadAsCompletable(final Uri sourceUri, final boolean useThumbnail,
-      final RectF initialFrameRect) {
-    return Completable.create(new CompletableOnSubscribe() {
-
-      @Override public void subscribe(@NonNull final CompletableEmitter emitter) throws Exception {
-
-        mInitialFrameRect = initialFrameRect;
-        mSourceUri = sourceUri;
-
-        if (useThumbnail) {
-          applyThumbnail(sourceUri);
-        }
-
-        final Bitmap sampled = getImage(sourceUri);
-
-        mHandler.post(new Runnable() {
-          @Override public void run() {
-            mAngle = mExifRotation;
-            setImageDrawableInternal(new BitmapDrawable(getResources(), sampled));
-            emitter.onComplete();
-          }
-        });
-      }
-    }).doOnSubscribe(new Consumer<Disposable>() {
-      @Override public void accept(@NonNull Disposable disposable) throws Exception {
-        mIsLoading.set(true);
-      }
-    }).doFinally(new Action() {
-      @Override public void run() throws Exception {
-        mIsLoading.set(false);
       }
     });
   }
@@ -1777,42 +1705,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
     cropAsync(null, cropCallback);
   }
 
-  /**
-   * Crop image with RxJava2
-   *
-   * @param sourceUri Uri for cropping(If null, the Uri set in loadAsSingle() is used)
-   *
-   * @return Single of cropping image
-   */
-  public Single<Bitmap> cropAsSingle(final Uri sourceUri) {
-    return Single.fromCallable(new Callable<Bitmap>() {
-
-      @Override public Bitmap call() throws Exception {
-        if (sourceUri != null) mSourceUri = sourceUri;
-        return cropImage();
-      }
-    }).doOnSubscribe(new Consumer<Disposable>() {
-      @Override public void accept(@NonNull Disposable disposable) throws Exception {
-        mIsCropping.set(true);
-      }
-    }).doFinally(new Action() {
-      @Override public void run() throws Exception {
-        mIsCropping.set(false);
-      }
-    });
-  }
-
-  public Single<Bitmap> cropAsSingle() {
-    return cropAsSingle(null);
-  }
-
-  /**
-   * Crop image with Builder Pattern
-   *
-   * @param sourceUri Uri for cropping(If null, the Uri set in loadAsSingle() is used)
-   *
-   * @return Builder
-   */
   public CropRequest crop(Uri sourceUri) {
     return new CropRequest(this, sourceUri);
   }
@@ -1846,38 +1738,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
     });
   }
 
-  /**
-   * Save image with RxJava2
-   *
-   * @param bitmap Bitmap for saving
-   * @param saveUri Uri for saving the cropped image
-   *
-   * @return Single of saving image
-   */
-  public Single<Uri> saveAsSingle(final Bitmap bitmap, final Uri saveUri) {
-    return Single.fromCallable(new Callable<Uri>() {
-
-      @Override public Uri call() throws Exception {
-        return saveImage(bitmap, saveUri);
-      }
-    }).doOnSubscribe(new Consumer<Disposable>() {
-      @Override public void accept(@NonNull Disposable disposable) throws Exception {
-        mIsSaving.set(true);
-      }
-    }).doFinally(new Action() {
-      @Override public void run() throws Exception {
-        mIsSaving.set(false);
-      }
-    });
-  }
-
-  /**
-   * Save image with Builder Pattern
-   *
-   * @param bitmap image for saving
-   *
-   * @return Builder
-   */
   public SaveRequest save(Bitmap bitmap) {
     return new SaveRequest(this, bitmap);
   }
@@ -1909,14 +1769,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
     return cropped;
   }
 
-  /**
-   * Get frame position relative to the source bitmap.
-   * @see #load(Uri)
-   * @see #loadAsync(Uri, boolean, RectF, LoadCallback)
-   * @see #loadAsCompletable(Uri, boolean, RectF)
-   *
-   * @return getCroppedBitmap area boundaries.
-   */
   public RectF getActualCropRect() {
     if(mImageRect == null) return null;
     float offsetX = (mImageRect.left / mScale);

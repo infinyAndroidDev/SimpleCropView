@@ -9,19 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.isseiaoki.simplecropview.util.Utils;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends Activity {
   private static final String TAG = ResultActivity.class.getSimpleName();
   private ImageView mImageView;
   private ExecutorService mExecutor;
@@ -37,9 +34,6 @@ public class ResultActivity extends AppCompatActivity {
     setContentView(R.layout.activity_result);
 
     // apply custom font
-    FontUtils.setFont((ViewGroup) findViewById(R.id.layout_root));
-
-    initToolbar();
 
     mImageView = (ImageView) findViewById(R.id.result_image);
     mExecutor = Executors.newSingleThreadExecutor();
@@ -55,20 +49,6 @@ public class ResultActivity extends AppCompatActivity {
 
   @Override public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-  }
-
-  @Override public boolean onSupportNavigateUp() {
-    onBackPressed();
-    return super.onSupportNavigateUp();
-  }
-
-  private void initToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    FontUtils.setTitle(actionBar, "Cropped Image");
-    actionBar.setDisplayHomeAsUpEnabled(true);
-    actionBar.setHomeButtonEnabled(true);
   }
 
   private int calcImageSize() {

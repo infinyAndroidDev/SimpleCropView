@@ -3,7 +3,6 @@ package com.isseiaoki.simplecropview;
 import android.graphics.RectF;
 import android.net.Uri;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
-import io.reactivex.Completable;
 
 public class LoadRequest {
 
@@ -38,12 +37,5 @@ public class LoadRequest {
       cropImageView.setInitialFrameScale(initialFrameScale);
     }
     cropImageView.loadAsync(sourceUri, useThumbnail, initialFrameRect, callback);
-  }
-
-  public Completable executeAsCompletable() {
-    if (initialFrameRect == null) {
-      cropImageView.setInitialFrameScale(initialFrameScale);
-    }
-    return cropImageView.loadAsCompletable(sourceUri, useThumbnail, initialFrameRect);
   }
 }
