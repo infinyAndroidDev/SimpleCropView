@@ -1,4 +1,4 @@
-package com.example.simplecropviewsample;
+package com.mayank.simplecropviewsample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

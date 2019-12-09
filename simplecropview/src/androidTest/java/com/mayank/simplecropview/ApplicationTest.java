@@ -1,4 +1,4 @@
-package com.isseiaoki.simplecropview;
+package com.mayank.simplecropview;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

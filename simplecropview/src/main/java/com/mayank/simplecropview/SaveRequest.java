@@ -1,9 +1,9 @@
-package com.isseiaoki.simplecropview;
+package com.mayank.simplecropview;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-import com.isseiaoki.simplecropview.callback.SaveCallback;
+import com.mayank.simplecropview.callback.SaveCallback;
 
 public class SaveRequest {
 

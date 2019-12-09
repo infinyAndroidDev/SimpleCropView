@@ -1,4 +1,4 @@
-package com.isseiaoki.simplecropview.callback;
+package com.mayank.simplecropview.callback;
 
 public interface LoadCallback extends Callback {
   void onSuccess();

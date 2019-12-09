@@ -1,4 +1,4 @@
-package com.example.simplecropviewsample;
+package com.mayank.simplecropviewsample;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,12 +17,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 
-import com.isseiaoki.simplecropview.CropImageView;
+import com.mayank.simplecropview.CropImageView;
 
-import com.isseiaoki.simplecropview.callback.CropCallback;
-import com.isseiaoki.simplecropview.callback.LoadCallback;
-import com.isseiaoki.simplecropview.callback.SaveCallback;
-import com.isseiaoki.simplecropview.util.Utils;
+import com.mayank.simplecropview.callback.CropCallback;
+import com.mayank.simplecropview.callback.LoadCallback;
+import com.mayank.simplecropview.callback.SaveCallback;
+import com.mayank.simplecropview.util.Utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

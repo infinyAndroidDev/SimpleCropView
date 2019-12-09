@@ -1,4 +1,4 @@
-package com.example.simplecropviewsample;
+package com.mayank.simplecropviewsample;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,9 +13,8 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
-import com.isseiaoki.simplecropview.util.Utils;
+import com.mayank.simplecropview.util.Utils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

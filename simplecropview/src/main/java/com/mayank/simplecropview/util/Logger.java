@@ -1,4 +1,4 @@
-package com.isseiaoki.simplecropview.util;
+package com.mayank.simplecropview.util;
 
 @SuppressWarnings("unused") public class Logger {
   private static final String TAG = "SimpleCropView";

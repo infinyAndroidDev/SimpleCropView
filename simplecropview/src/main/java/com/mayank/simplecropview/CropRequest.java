@@ -1,8 +1,8 @@
-package com.isseiaoki.simplecropview;
+package com.mayank.simplecropview;
 
 import android.net.Uri;
 
-import com.isseiaoki.simplecropview.callback.CropCallback;
+import com.mayank.simplecropview.callback.CropCallback;
 
 public class CropRequest {
 
