@@ -31,5 +31,6 @@ android {
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation project(':simplecropview')
+//  implementation project(':simplecropview')
+  implementation 'com.mayank:simplecropview:1.0.0'
 }
