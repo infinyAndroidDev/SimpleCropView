@@ -2,9 +2,6 @@
 
 # SimpleCropView
 
-<a href='https://bintray.com/mayank1513/SimpleCropView/com.mayank.SimpleCropView?source=watch' alt='Get automatic notifications about new "com.mayank.SimpleCropView" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a><a href='https://bintray.com/mayank1513/SimpleCropView/com.mayank.SimpleCropView?source=watch' alt='Get automatic notifications about new "com.mayank.SimpleCropView" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
-
-
 The SimpleCropView is a simple light-weight image cropping library for Android that adds just less than 50kb to your apk.<br>
 It simplifies your code for cropping image and provides an easily customizable UI.<br><br>
 Supported on API Level 14 and above.
